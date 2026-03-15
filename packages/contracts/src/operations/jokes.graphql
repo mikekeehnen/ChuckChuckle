@@ -1,0 +1,23 @@
+query RandomJoke {
+  randomJoke {
+    id
+    value
+    url
+    icon_url
+    created_at
+    updated_at
+    categories
+  }
+}
+
+query RandomJokes($count: Int!) {
+  randomJokes(count: $count) {
+    id
+    value
+    url
+    icon_url
+    created_at
+    updated_at
+    categories
+  }
+}

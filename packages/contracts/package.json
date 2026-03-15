@@ -1,0 +1,24 @@
+{
+  "name": "contracts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./generated": "./src/generated/graphql.ts"
+  },
+  "scripts": {
+    "generate": "vp run mesh#build && vp exec graphql-codegen --config codegen.ts",
+    "build": "vp run generate"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.7",
+    "@graphql-codegen/typed-document-node": "^5.0.10",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.1",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "graphql": "^16.13.1",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}
