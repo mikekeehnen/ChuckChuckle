@@ -1,0 +1,19 @@
+{
+  "name": "mesh",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp exec mesh-compose -o supergraph.graphql && vp exec hive-gateway supergraph supergraph.graphql",
+    "build": "vp exec mesh-compose -o supergraph.graphql"
+  },
+  "dependencies": {
+    "@graphql-hive/gateway": "^2.5.6",
+    "@graphql-mesh/compose-cli": "^1.5.16",
+    "@omnigraph/json-schema": "^0.109.29"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}
