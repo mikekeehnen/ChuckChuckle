@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vp exec mesh-compose -o supergraph.graphql && vp exec hive-gateway supergraph supergraph.graphql",
+    "dev": "vp exec mesh-compose -o supergraph.graphql && vp exec hive-gateway -c gateway.config.ts supergraph supergraph.graphql",
     "build": "vp exec mesh-compose -o supergraph.graphql"
   },
   "dependencies": {

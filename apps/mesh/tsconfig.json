@@ -7,5 +7,5 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["api", "mesh.config.ts", "src"]
+  "include": ["api", "gateway.config.ts", "mesh.config.ts", "src"]
 }

@@ -1,4 +1,5 @@
 import { createGatewayRuntime } from "@graphql-hive/gateway";
+import { randomJokesResolvers, randomJokesTypeDefs } from "./random-jokes-extension";
 
 const supergraphPath = new URL("../supergraph.graphql", import.meta.url).pathname;
 
@@ -10,6 +11,8 @@ const gateway = createGatewayRuntime({
     origin: "*",
   },
   graphiql: true,
+  additionalTypeDefs: randomJokesTypeDefs,
+  additionalResolvers: randomJokesResolvers,
 });
 
 export function fetch(request: Request): Promise<Response> | Response {
