@@ -3,6 +3,7 @@ import { RandomJokesDocument, type RandomJokeQuery, type RandomJokesQuery } from
 
 import { persistApolloCache } from "../../apollo/persistence";
 import { INITIAL_JOKE_COUNT } from "./constants";
+import { rotateVisibleJokes } from "./logic";
 
 const jokesQueryVariables = { count: INITIAL_JOKE_COUNT };
 
@@ -22,7 +23,7 @@ export function prependJokeToVisibleCache(
   joke: NonNullable<RandomJokeQuery["randomJoke"]>,
 ) {
   const previousJokes = readVisibleJokesFromCache(apolloClient);
-  const nextJokes = [joke, ...previousJokes].slice(0, INITIAL_JOKE_COUNT);
+  const nextJokes = rotateVisibleJokes(previousJokes, joke, INITIAL_JOKE_COUNT);
 
   apolloClient.writeQuery({
     query: RandomJokesDocument,

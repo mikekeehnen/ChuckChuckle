@@ -4,6 +4,7 @@ import type { RandomJokesQuery } from "contracts";
 
 import { persistApolloCache } from "../../apollo/persistence";
 import { MAX_FAVORITES } from "./constants";
+import { removeFavoriteFromList, toggleFavoriteInList } from "./logic";
 import { loadFavoritesFromStorage, saveFavoritesToStorage } from "./storage";
 
 export type FavoriteJoke = RandomJokesQuery["randomJokes"][number];
@@ -63,28 +64,18 @@ export function toggleFavoriteInCache(
   apolloClient: ApolloClient<object>,
   joke: FavoriteJoke,
 ): boolean {
-  if (!joke.id) {
-    return false;
-  }
-
   const favorites = readFavoritesFromCache(apolloClient);
-
-  if (isFavorite(favorites, joke.id)) {
-    const nextFavorites = favorites.filter((favoriteJoke) => favoriteJoke.id !== joke.id);
-    writeFavoritesToCache(apolloClient, nextFavorites);
-    return true;
-  }
-
-  if (favorites.length >= MAX_FAVORITES) {
+  const { nextFavorites, wasUpdated } = toggleFavoriteInList(favorites, joke, MAX_FAVORITES);
+  if (!wasUpdated) {
     return false;
   }
 
-  writeFavoritesToCache(apolloClient, [joke, ...favorites]);
+  writeFavoritesToCache(apolloClient, nextFavorites);
   return true;
 }
 
 export function removeFavoriteFromCache(apolloClient: ApolloClient<object>, jokeId: string) {
   const favorites = readFavoritesFromCache(apolloClient);
-  const nextFavorites = favorites.filter((favoriteJoke) => favoriteJoke.id !== jokeId);
+  const nextFavorites = removeFavoriteFromList(favorites, jokeId);
   writeFavoritesToCache(apolloClient, nextFavorites);
 }
