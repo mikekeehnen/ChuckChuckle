@@ -9,34 +9,55 @@ on:
 
 jobs:
   deploy-mesh:
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && secrets.VERCEL_TOKEN != '' && secrets.VERCEL_ORG_ID != '' && secrets.VERCEL_MESH_PROJECT_ID != ''
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check Vercel secrets
+        id: preflight
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_MESH_PROJECT_ID }}
+        run: |
+          if [ -n "$VERCEL_TOKEN" ] && [ -n "$VERCEL_ORG_ID" ] && [ -n "$VERCEL_PROJECT_ID" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping mesh deploy because one or more Vercel secrets are missing."
+          fi
+
       - name: Checkout
+        if: steps.preflight.outputs.ready == 'true'
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Setup Node
+        if: steps.preflight.outputs.ready == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
 
       - name: Install Vite+
+        if: steps.preflight.outputs.ready == 'true'
         run: npm install --global vite-plus
 
       - name: Install Vercel CLI
+        if: steps.preflight.outputs.ready == 'true'
         run: npm install --global vercel
 
       - name: Install dependencies
+        if: steps.preflight.outputs.ready == 'true'
         run: vp install
 
       - name: Build Mesh supergraph
+        if: steps.preflight.outputs.ready == 'true'
         run: vp run mesh#build
 
       - name: Deploy Mesh to Vercel
+        if: steps.preflight.outputs.ready == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
