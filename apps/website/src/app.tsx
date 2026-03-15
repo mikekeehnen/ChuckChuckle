@@ -34,7 +34,7 @@ export function App() {
       />
 
       <QueryStateSwitch
-        isLoading={loading}
+        isLoading={loading && jokes.length === 0}
         isError={isError}
         loadingComponent={<JokesLoading />}
         errorComponent={null}

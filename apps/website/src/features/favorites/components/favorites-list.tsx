@@ -28,7 +28,15 @@ export function FavoritesList({ favorites, onRemoveFavorite }: FavoritesListProp
           <Card size="sm">
             <CardContent className="grid gap-2">
               <div className="flex items-start justify-between gap-3">
-                <p className="text-sm leading-relaxed">{joke.value}</p>
+                <div className="flex items-start gap-3">
+                  <img
+                    src={joke.icon_url}
+                    alt="Chuck Norris"
+                    className="mt-0.5 size-8 rounded-md border border-border bg-muted/50"
+                    loading="lazy"
+                  />
+                  <p className="text-sm leading-relaxed">{joke.value}</p>
+                </div>
                 <Button
                   variant="outline"
                   size="icon-sm"
