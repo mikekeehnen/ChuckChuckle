@@ -108,7 +108,7 @@ vp run dev
 ### Required repository setup
 
 1. Enable GitHub Pages with source set to **GitHub Actions**.
-2. Add repository variable `VITE_MESH_ENDPOINT` with your deployed Mesh GraphQL URL.
+2. Add repository variable `VITE_MESH_ENDPOINT` with your deployed Mesh GraphQL URL (use the stable production URL, for example `https://<mesh-project>.vercel.app/api/graphql`).
 3. Add mesh deployment secrets for Vercel:
    - `VERCEL_TOKEN`
    - `VERCEL_ORG_ID`
