@@ -28,6 +28,9 @@ jobs:
       - name: Install Vite+
         run: npm install --global vite-plus
 
+      - name: Install TypeScript runtime
+        run: npm install --global typescript
+
       - name: Install dependencies
         run: vp install
 
