@@ -1,0 +1,55 @@
+name: Deploy Website
+
+on:
+  workflow_run:
+    workflows:
+      - Validate Workspace
+    types:
+      - completed
+
+jobs:
+  deploy-website:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install Vite+
+        run: npm install --global vite-plus
+
+      - name: Install dependencies
+        run: vp install
+
+      - name: Build website
+        env:
+          VITE_MESH_ENDPOINT: ${{ vars.VITE_MESH_ENDPOINT }}
+        run: vp run website#build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/website/dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

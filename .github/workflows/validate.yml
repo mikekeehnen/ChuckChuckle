@@ -1,0 +1,36 @@
+name: Validate Workspace
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install Vite+
+        run: npm install --global vite-plus
+
+      - name: Install dependencies
+        run: vp install
+
+      - name: Run checks
+        run: vp check
+
+      - name: Run tests
+        run: vp run test -r
+
+      - name: Build workspace
+        run: vp run build -r

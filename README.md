@@ -89,3 +89,27 @@ vp test
 vp run build -r
 vp run dev
 ```
+
+## Automation
+
+- GitHub Actions workflows:
+  - `.github/workflows/validate.yml`
+  - `.github/workflows/deploy-website.yml`
+  - `.github/workflows/deploy-mesh.yml`
+- Validation runs on pull requests and pushes to `main`:
+  - `vp install`
+  - `vp check`
+  - `vp run test -r`
+  - `vp run build -r`
+- Deployments run after successful validation on `main`:
+  - website deploys `apps/website/dist` to GitHub Pages
+  - mesh deploys `apps/mesh` to Vercel (when mesh secrets are configured)
+
+### Required repository setup
+
+1. Enable GitHub Pages with source set to **GitHub Actions**.
+2. Add repository variable `VITE_MESH_ENDPOINT` with your deployed Mesh GraphQL URL.
+3. Add mesh deployment secrets for Vercel:
+   - `VERCEL_TOKEN`
+   - `VERCEL_ORG_ID`
+   - `VERCEL_MESH_PROJECT_ID`

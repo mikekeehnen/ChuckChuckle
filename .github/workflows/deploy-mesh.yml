@@ -1,0 +1,44 @@
+name: Deploy Mesh API
+
+on:
+  workflow_run:
+    workflows:
+      - Validate Workspace
+    types:
+      - completed
+
+jobs:
+  deploy-mesh:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && secrets.VERCEL_TOKEN != '' && secrets.VERCEL_ORG_ID != '' && secrets.VERCEL_MESH_PROJECT_ID != ''
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install Vite+
+        run: npm install --global vite-plus
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel
+
+      - name: Install dependencies
+        run: vp install
+
+      - name: Build Mesh supergraph
+        run: vp run mesh#build
+
+      - name: Deploy Mesh to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_MESH_PROJECT_ID }}
+        run: vercel deploy --prod --yes --cwd apps/mesh --token "$VERCEL_TOKEN"
