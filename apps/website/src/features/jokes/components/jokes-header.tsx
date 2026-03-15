@@ -12,6 +12,8 @@ type JokesHeaderProps = {
   loading: boolean;
   errorMessage?: string;
   visibleCount: number;
+  favoriteCount: number;
+  favoritesLimitMessage?: string | null;
   isTimerEnabled: boolean;
   secondsUntilNextTick: number | null;
   onToggleTimer: () => void;
@@ -22,6 +24,8 @@ export function JokesHeader({
   loading,
   errorMessage,
   visibleCount,
+  favoriteCount,
+  favoritesLimitMessage,
   isTimerEnabled,
   secondsUntilNextTick,
   onToggleTimer,
@@ -41,10 +45,17 @@ export function JokesHeader({
                 ? errorMessage
                 : "Powered by GraphQL Mesh, Apollo, and shadcn/ui."}
           </CardDescription>
+          {favoritesLimitMessage ? (
+            <CardDescription className="text-destructive">{favoritesLimitMessage}</CardDescription>
+          ) : null}
         </div>
         {!loading && !errorMessage ? (
           <div className="flex items-center gap-2">
             <Badge variant="secondary">{visibleCount} jokes</Badge>
+            <Badge variant="secondary">{favoriteCount}/10 favorites</Badge>
+            <Button variant="outline" asChild>
+              <a href="/favorites.html">Favorites</a>
+            </Button>
             <Button variant="outline" onClick={onRefresh}>
               Refresh
             </Button>
