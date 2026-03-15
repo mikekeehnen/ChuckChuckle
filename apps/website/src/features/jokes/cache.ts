@@ -1,6 +1,7 @@
 import type { ApolloClient } from "@apollo/client";
 import { RandomJokesDocument, type RandomJokeQuery, type RandomJokesQuery } from "contracts";
 
+import { persistApolloCache } from "../../apollo/persistence";
 import { INITIAL_JOKE_COUNT } from "./constants";
 
 const jokesQueryVariables = { count: INITIAL_JOKE_COUNT };
@@ -30,4 +31,6 @@ export function prependJokeToVisibleCache(
       randomJokes: nextJokes,
     },
   });
+
+  persistApolloCache(apolloClient);
 }

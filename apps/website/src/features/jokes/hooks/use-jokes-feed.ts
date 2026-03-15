@@ -1,7 +1,8 @@
 import { useApolloClient, useQuery } from "@apollo/client";
 import { RandomJokeDocument, RandomJokesDocument } from "contracts";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
+import { persistApolloCache } from "../../../apollo/persistence";
 import { prependJokeToVisibleCache, readVisibleJokesFromCache } from "../cache";
 import { INITIAL_JOKE_COUNT, TIMER_INTERVAL_MS } from "../constants";
 import { useJokeRotationTimer } from "./use-joke-rotation-timer";
@@ -33,9 +34,19 @@ export function useJokesFeed() {
     onTick: tickTimer,
   });
 
+  useEffect(() => {
+    if (data?.randomJokes) {
+      persistApolloCache(apolloClient);
+    }
+  }, [apolloClient, data]);
+
   const refresh = useCallback(() => {
-    void refetch();
-  }, [refetch]);
+    void refetch().then((result) => {
+      if (result.data?.randomJokes) {
+        persistApolloCache(apolloClient);
+      }
+    });
+  }, [apolloClient, refetch]);
 
   const toggleTimer = useCallback(() => {
     setIsTimerEnabled((previousValue) => !previousValue);

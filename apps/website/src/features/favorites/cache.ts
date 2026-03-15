@@ -2,6 +2,7 @@ import type { ApolloClient } from "@apollo/client";
 import { gql } from "@apollo/client";
 import type { RandomJokesQuery } from "contracts";
 
+import { persistApolloCache } from "../../apollo/persistence";
 import { MAX_FAVORITES } from "./constants";
 import { loadFavoritesFromStorage, saveFavoritesToStorage } from "./storage";
 
@@ -46,6 +47,7 @@ export function writeFavoritesToCache(
   });
 
   saveFavoritesToStorage(favorites);
+  persistApolloCache(apolloClient);
 }
 
 export function hydrateFavoritesCache(apolloClient: ApolloClient<object>) {
