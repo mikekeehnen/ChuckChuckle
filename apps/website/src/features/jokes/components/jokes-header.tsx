@@ -12,10 +12,21 @@ type JokesHeaderProps = {
   loading: boolean;
   errorMessage?: string;
   visibleCount: number;
+  isTimerEnabled: boolean;
+  secondsUntilNextTick: number | null;
+  onToggleTimer: () => void;
   onRefresh: () => void;
 };
 
-export function JokesHeader({ loading, errorMessage, visibleCount, onRefresh }: JokesHeaderProps) {
+export function JokesHeader({
+  loading,
+  errorMessage,
+  visibleCount,
+  isTimerEnabled,
+  secondsUntilNextTick,
+  onToggleTimer,
+  onRefresh,
+}: JokesHeaderProps) {
   return (
     <Card>
       <CardHeader className="flex-row items-start justify-between gap-4">
@@ -37,6 +48,12 @@ export function JokesHeader({ loading, errorMessage, visibleCount, onRefresh }: 
             <Button variant="outline" onClick={onRefresh}>
               Refresh
             </Button>
+            <Button variant={isTimerEnabled ? "default" : "secondary"} onClick={onToggleTimer}>
+              {isTimerEnabled ? "Stop timer" : "Start timer"}
+            </Button>
+            {isTimerEnabled && secondsUntilNextTick !== null ? (
+              <Badge variant="outline">next in {secondsUntilNextTick}s</Badge>
+            ) : null}
           </div>
         ) : null}
       </CardHeader>
