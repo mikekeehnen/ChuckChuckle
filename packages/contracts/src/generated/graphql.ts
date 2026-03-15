@@ -17,6 +17,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: { input: any; output: any };
   ObjMap: { input: any; output: any };
   /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
   URL: { input: string; output: string };
@@ -27,13 +29,14 @@ export type Scalars = {
 
 export type ChuckJoke = {
   __typename?: "ChuckJoke";
-  categories?: Maybe<Array<Maybe<Scalars["String"]["output"]>>>;
-  created_at?: Maybe<Scalars["String"]["output"]>;
-  icon_url?: Maybe<Scalars["URL"]["output"]>;
-  id?: Maybe<Scalars["String"]["output"]>;
-  updated_at?: Maybe<Scalars["String"]["output"]>;
-  url?: Maybe<Scalars["URL"]["output"]>;
-  value?: Maybe<Scalars["String"]["output"]>;
+  additionalProperties?: Maybe<Scalars["JSON"]["output"]>;
+  categories: Array<Maybe<Scalars["String"]["output"]>>;
+  created_at: Scalars["String"]["output"];
+  icon_url: Scalars["URL"]["output"];
+  id: Scalars["String"]["output"];
+  updated_at: Scalars["String"]["output"];
+  url: Scalars["URL"]["output"];
+  value: Scalars["String"]["output"];
 };
 
 export type HttpMethod =
@@ -71,13 +74,13 @@ export type RandomJokeQuery = {
   __typename?: "Query";
   randomJoke?: {
     __typename?: "ChuckJoke";
-    id?: string | null;
-    value?: string | null;
-    url?: string | null;
-    icon_url?: string | null;
-    created_at?: string | null;
-    updated_at?: string | null;
-    categories?: Array<string | null> | null;
+    id: string;
+    value: string;
+    url: string;
+    icon_url: string;
+    created_at: string;
+    updated_at: string;
+    categories: Array<string | null>;
   } | null;
 };
 
@@ -89,13 +92,13 @@ export type RandomJokesQuery = {
   __typename?: "Query";
   randomJokes: Array<{
     __typename?: "ChuckJoke";
-    id?: string | null;
-    value?: string | null;
-    url?: string | null;
-    icon_url?: string | null;
-    created_at?: string | null;
-    updated_at?: string | null;
-    categories?: Array<string | null> | null;
+    id: string;
+    value: string;
+    url: string;
+    icon_url: string;
+    created_at: string;
+    updated_at: string;
+    categories: Array<string | null>;
   }>;
 };
 
