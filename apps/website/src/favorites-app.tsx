@@ -6,6 +6,7 @@ import { useFavorites } from "./features/favorites/hooks/use-favorites";
 
 export function FavoritesApp() {
   const { favorites, favoriteCount, removeFavorite } = useFavorites();
+  const jokesPath = import.meta.env.BASE_URL;
 
   return (
     <main className="mx-auto grid min-h-dvh w-full max-w-4xl gap-4 px-4 py-10 md:px-6">
@@ -18,7 +19,7 @@ export function FavoritesApp() {
           <div className="flex items-center gap-2">
             <Badge variant="secondary">{favoriteCount}/10 favorites</Badge>
             <Button variant="outline" asChild>
-              <a href="/">Back to jokes</a>
+              <a href={jokesPath}>Back to jokes</a>
             </Button>
           </div>
         </CardHeader>

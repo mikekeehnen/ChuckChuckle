@@ -31,6 +31,8 @@ export function JokesHeader({
   onToggleTimer,
   onRefresh,
 }: JokesHeaderProps) {
+  const favoritesPath = `${import.meta.env.BASE_URL}favorites.html`;
+
   return (
     <Card>
       <CardHeader className="flex-row items-start justify-between gap-4">
@@ -54,7 +56,7 @@ export function JokesHeader({
             <Badge variant="secondary">{visibleCount} jokes</Badge>
             <Badge variant="secondary">{favoriteCount}/10 favorites</Badge>
             <Button variant="outline" asChild>
-              <a href="/favorites.html">Favorites</a>
+              <a href={favoritesPath}>Favorites</a>
             </Button>
             <Button variant="outline" onClick={onRefresh}>
               Refresh
