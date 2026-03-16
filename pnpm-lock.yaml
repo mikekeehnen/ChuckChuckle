@@ -66,6 +66,9 @@ importers:
       '@omnigraph/json-schema':
         specifier: ^0.109.29
         version: 0.109.29(graphql@16.13.1)(ioredis@5.10.0)
+      '@whatwg-node/server':
+        specifier: ^0.10.18
+        version: 0.10.18
 
   apps/website:
     dependencies:

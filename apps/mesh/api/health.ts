@@ -1,5 +1,7 @@
-export { default } from "../src/handler.js";
+import { createServerAdapter } from "@whatwg-node/server";
 
-export const config = {
-  runtime: "edge",
-};
+import { fetch as meshFetch } from "../src/handler.js";
+
+const adapter = createServerAdapter(meshFetch);
+
+export default adapter;
