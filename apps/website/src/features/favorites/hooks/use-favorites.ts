@@ -1,6 +1,5 @@
 import { useApolloClient, useQuery } from "@apollo/client";
 import { useCallback, useMemo, useState } from "react";
-import type { RandomJokesQuery } from "contracts";
 
 import {
   FAVORITES_QUERY,
@@ -10,8 +9,9 @@ import {
   toggleFavoriteInCache,
 } from "../cache";
 import { MAX_FAVORITES } from "../constants";
+import type { Joke } from "../../jokes/types";
 
-type FavoriteJoke = RandomJokesQuery["randomJokes"][number];
+type FavoriteJoke = Joke;
 type FavoritesQueryResult = {
   favorites: FavoriteJoke[];
 };

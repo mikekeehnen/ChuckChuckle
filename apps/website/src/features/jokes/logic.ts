@@ -1,9 +1,5 @@
-import type { RandomJokeQuery, RandomJokesQuery } from "contracts";
+import type { Joke, Jokes } from "./types";
 
-export function rotateVisibleJokes(
-  previousJokes: RandomJokesQuery["randomJokes"],
-  nextJoke: NonNullable<RandomJokeQuery["randomJoke"]>,
-  maxItems: number,
-): RandomJokesQuery["randomJokes"] {
+export function rotateVisibleJokes(previousJokes: Jokes, nextJoke: Joke, maxItems: number): Jokes {
   return [nextJoke, ...previousJokes].slice(0, maxItems);
 }

@@ -1,13 +1,13 @@
 import type { ApolloClient } from "@apollo/client";
 import { gql } from "@apollo/client";
-import type { RandomJokesQuery } from "contracts";
 
 import { persistApolloCache } from "../../apollo/persistence";
+import type { Joke } from "../jokes/types";
 import { MAX_FAVORITES } from "./constants";
 import { removeFavoriteFromList, toggleFavoriteInList } from "./logic";
 import { loadFavoritesFromStorage, saveFavoritesToStorage } from "./storage";
 
-export type FavoriteJoke = RandomJokesQuery["randomJokes"][number];
+export type FavoriteJoke = Joke;
 
 export const FAVORITES_QUERY = gql`
   query Favorites {

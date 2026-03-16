@@ -1,14 +1,14 @@
-import type { RandomJokesQuery } from "contracts";
 import { Heart } from "lucide-react";
 
 import { Button } from "../../../components/ui/button";
 import { Card, CardContent } from "../../../components/ui/card";
 import { Separator } from "../../../components/ui/separator";
+import type { Joke, Jokes } from "../types";
 
 type JokesListProps = {
-  jokes: RandomJokesQuery["randomJokes"];
+  jokes: Jokes;
   favoriteIds: Set<string>;
-  onToggleFavorite: (joke: RandomJokesQuery["randomJokes"][number]) => void;
+  onToggleFavorite: (joke: Joke) => void;
 };
 
 export function JokesList({ jokes, favoriteIds, onToggleFavorite }: JokesListProps) {

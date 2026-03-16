@@ -69,6 +69,9 @@ importers:
       '@whatwg-node/server':
         specifier: ^0.10.18
         version: 0.10.18
+      contracts:
+        specifier: workspace:*
+        version: link:../../packages/contracts
 
   apps/website:
     dependencies:

@@ -1,15 +1,14 @@
 import type { ApolloClient } from "@apollo/client";
-import { RandomJokesDocument, type RandomJokeQuery, type RandomJokesQuery } from "contracts";
+import { RandomJokesDocument } from "contracts";
 
 import { persistApolloCache } from "../../apollo/persistence";
 import { INITIAL_JOKE_COUNT } from "./constants";
 import { rotateVisibleJokes } from "./logic";
+import type { Joke, Jokes } from "./types";
 
 const jokesQueryVariables = { count: INITIAL_JOKE_COUNT };
 
-export function readVisibleJokesFromCache(
-  apolloClient: ApolloClient<object>,
-): RandomJokesQuery["randomJokes"] {
+export function readVisibleJokesFromCache(apolloClient: ApolloClient<object>): Jokes {
   const cachedData = apolloClient.readQuery({
     query: RandomJokesDocument,
     variables: jokesQueryVariables,
@@ -18,10 +17,7 @@ export function readVisibleJokesFromCache(
   return cachedData?.randomJokes ?? [];
 }
 
-export function prependJokeToVisibleCache(
-  apolloClient: ApolloClient<object>,
-  joke: NonNullable<RandomJokeQuery["randomJoke"]>,
-) {
+export function prependJokeToVisibleCache(apolloClient: ApolloClient<object>, joke: Joke) {
   const previousJokes = readVisibleJokesFromCache(apolloClient);
   const nextJokes = rotateVisibleJokes(previousJokes, joke, INITIAL_JOKE_COUNT);
 

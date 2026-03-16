@@ -1,8 +1,8 @@
-import type { RandomJokesQuery } from "contracts";
+import type { Joke } from "../jokes/types";
 
 import { FAVORITES_STORAGE_KEY } from "./constants";
 
-type FavoriteJoke = RandomJokesQuery["randomJokes"][number];
+type FavoriteJoke = Joke;
 
 function isFavoriteJoke(value: unknown): value is FavoriteJoke {
   if (!value || typeof value !== "object") {

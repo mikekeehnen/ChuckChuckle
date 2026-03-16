@@ -1,6 +1,5 @@
 import { defineConfig } from "@graphql-hive/gateway";
-
-import { randomJokesResolvers, randomJokesTypeDefs } from "./src/random-jokes-extension.js";
+import { randomJokesResolvers, randomJokesTypeDefs } from "./src/random-jokes-extension";
 
 export const gatewayConfig = defineConfig({
   supergraph: "./supergraph.graphql",
