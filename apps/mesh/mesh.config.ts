@@ -12,6 +12,9 @@ export const composeConfig = defineConfig({
             field: "randomJoke",
             path: "/jokes/random",
             method: "GET",
+            headers: {
+              accept: "application/json",
+            },
             responseSchema: "./src/schemas/chuck-joke.schema.json",
             responseTypeName: "ChuckJoke",
           },

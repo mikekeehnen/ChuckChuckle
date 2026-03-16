@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@graphql-hive/gateway": "^2.5.6",
+    "@graphql-hive/gateway-runtime": "catalog:",
     "@graphql-mesh/compose-cli": "^1.5.16",
+    "@graphql-mesh/transport-rest": "catalog:",
     "@omnigraph/json-schema": "^0.109.29",
     "@whatwg-node/server": "^0.10.18",
     "contracts": "workspace:*"

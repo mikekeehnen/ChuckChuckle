@@ -8,6 +8,9 @@
     "dev": "vp run website#dev",
     "prepare": "vp config"
   },
+  "dependencies": {
+    "@graphql-mesh/transport-rest": "catalog:"
+  },
   "devDependencies": {
     "vite-plus": "catalog:"
   },

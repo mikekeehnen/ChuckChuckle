@@ -55,6 +55,9 @@ export const randomJokesTypeDefs = /* GraphQL */ `
 
 export const randomJokesResolvers = {
   Query: {
+    randomJoke: async () => {
+      return getRandomJoke();
+    },
     randomJokes: async (_root: unknown, args: { count: number }) => {
       const count = Math.max(1, Math.min(args.count, 10));
       const jokes = await Promise.all(Array.from({ length: count }, () => getRandomJoke()));

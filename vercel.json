@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm --filter mesh build",
+  "outputDirectory": ".",
+  "functions": {
+    "api/graphql.ts": {
+      "includeFiles": "node_modules/{@graphql-mesh/transport-rest/**,.pnpm/@graphql-mesh+transport-rest@*/node_modules/@graphql-mesh/transport-rest/**}"
+    }
+  }
+}

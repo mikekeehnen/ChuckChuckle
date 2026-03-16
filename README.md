@@ -103,7 +103,7 @@ vp run dev
   - `vp run build -r`
 - Deployments run after successful validation on `main`:
   - website deploys `apps/website/dist` to GitHub Pages
-  - mesh deploys `apps/mesh` to Vercel (when mesh secrets are configured)
+  - mesh deploys from repo root to Vercel (workspace-aware; when mesh secrets are configured)
 
 ### Required repository setup
 

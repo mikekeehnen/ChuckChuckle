@@ -1,4 +1,5 @@
-import { createGatewayRuntime } from "@graphql-hive/gateway";
+import { createGatewayRuntime } from "@graphql-hive/gateway-runtime";
+import "@graphql-mesh/transport-rest";
 import { randomJokesResolvers, randomJokesTypeDefs } from "./random-jokes-extension.js";
 
 const supergraphPath = new URL("../supergraph.graphql", import.meta.url).pathname;
@@ -10,6 +11,7 @@ const gateway = createGatewayRuntime({
   cors: {
     origin: "*",
   },
+  maskedErrors: false,
   graphiql: true,
   additionalTypeDefs: randomJokesTypeDefs,
   additionalResolvers: randomJokesResolvers,
